@@ -1,4 +1,4 @@
-## Pyhton
+## Python
 
 ```python
 #!/usr/bin/env python3
