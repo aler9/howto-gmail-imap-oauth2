@@ -1,4 +1,4 @@
-Gmail-IMAP-Oauth2 authentication sample code, in Python and Go. Allows to perform automated operations on emails without toggling the "less secure apps" switch on the Google account page. This is the simplest possible code and works in 2019.
+Sample code of the Gmail-IMAP-Oauth2 authentication procedure, in Python and Go. Allows to perform automated operations on emails without toggling the "less secure apps" switch on the Google account page. Code is the simplest possible in both cases and working as of 2019.
 
 ## Python
 
