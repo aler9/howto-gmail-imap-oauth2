@@ -156,30 +156,30 @@ func main() {
     imap,err := iclient.DialTLS("imap.gmail.com:993", nil)
 	if err != nil {
         panic(err)
-	}
+    }
     defer imap.Logout()
 
     // authenticate the gmail way
     err = imap.Authenticate(sasl.NewXoauth2Client(email, accessToken))
     if err != nil {
         panic(err)
-	}
+    }
 
     // the following is just an example that shows available folders
     // more examples are available here
     // https://godoc.org/github.com/emersion/go-imap/client
 
     fmt.Println("available folders:")
-	mailboxes := make(chan *ilib.MailboxInfo)
-	done := make(chan error, 1)
-	go func () {
-		done <- imap.List("", "*", mailboxes)
-	}()
-	for m := range mailboxes {
-		fmt.Println("* " + m.Name)
-	}
-	if err := <-done; err != nil {
-		panic(err)
-	}
+    mailboxes := make(chan *ilib.MailboxInfo)
+    done := make(chan error, 1)
+    go func () {
+        done <- imap.List("", "*", mailboxes)
+    }()
+    for m := range mailboxes {
+        fmt.Println("* " + m.Name)
+    }
+    if err := <-done; err != nil {
+        panic(err)
+    }
 }
 ```
