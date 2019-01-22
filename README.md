@@ -5,8 +5,6 @@ Sample code of the Gmail-IMAP-Oauth2 authentication procedure, in Python and Go.
 No dependencies are needed.
 
 ```python
-#!/usr/bin/env python3
-
 from urllib.parse import urlencode
 from urllib.request import urlopen, Request
 import json
