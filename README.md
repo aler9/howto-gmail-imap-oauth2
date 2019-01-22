@@ -135,7 +135,6 @@ func main() {
     if err != nil {
         panic(err)
     }
-    accessToken := eres.AccessToken
 
     // request user email
     hclient := &http.Client{}
@@ -143,7 +142,7 @@ func main() {
     if err != nil {
         panic(err)
     }
-    req.Header.Add("Authorization", "Bearer " + accessToken)
+    req.Header.Add("Authorization", "Bearer " + eres.AccessToken)
     res,err = hclient.Do(req)
     if err != nil {
         panic(err)
@@ -153,7 +152,6 @@ func main() {
     if err != nil {
         panic(err)
     }
-    email := ures.Email
 
     // connect to imap server
     imap,err := iclient.DialTLS("imap.gmail.com:993", nil)
@@ -163,7 +161,7 @@ func main() {
     defer imap.Logout()
 
     // authenticate the gmail way
-    err = imap.Authenticate(sasl.NewXoauth2Client(email, accessToken))
+    err = imap.Authenticate(sasl.NewXoauth2Client(ures.Email, eres.AccessToken))
     if err != nil {
         panic(err)
     }
