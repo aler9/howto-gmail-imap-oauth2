@@ -20,6 +20,8 @@ url = "https://accounts.google.com/o/oauth2/auth?" + urlencode({
     "response_type": "code",
 })
 print("visit\n%s\n" % url)
+
+# read response code
 code = input("paste reponse code: ")
 print("")
 
