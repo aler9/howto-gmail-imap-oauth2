@@ -42,10 +42,10 @@ with urlopen(Request("https://www.googleapis.com/oauth2/v2/userinfo", headers={
     user = json.loads(res.read())["email"]
 
 # connect to imap
-conn = IMAP4_SSL("imap.gmail.com", 993)
+imap = IMAP4_SSL("imap.gmail.com", 993)
 
 # authenticate the gmail way
-conn.authenticate("XOAUTH2", lambda x:
+imap.authenticate("XOAUTH2", lambda x:
     "user=%s\1auth=Bearer %s\1\1" % (user, access_token))
 
 # the following is just an example that shows available folders
@@ -53,7 +53,7 @@ conn.authenticate("XOAUTH2", lambda x:
 # https://docs.python.org/3/library/imaplib.html
 
 print("available folders:")
-res,data = conn.list('""', "*")
+res,data = imap.list('""', "*")
 for mbox in data:
     print(mbox.decode())
 
