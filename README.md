@@ -1,4 +1,8 @@
+Gmail-IMAP-Oauth2 authentication sample code, in Python and Go. Allows to perform automated operations on emails without toggling the "less secure apps" switch on the Google account page. This is the simplest possible code and works in 2019.
+
 ## Python
+
+No dependencies are needed.
 
 ```python
 #!/usr/bin/env python3
@@ -8,8 +12,7 @@ from urllib.request import urlopen, Request
 import json
 from imaplib import IMAP4_SSL
 
-# create a Google app here
-# https://console.developers.google.com
+# create a Google app here https://console.developers.google.com
 # then fill the following variables
 GMAIL_CLIENT_ID = ""
 GMAIL_CLIENT_SECRET = ""
@@ -35,20 +38,20 @@ with urlopen(Request("https://accounts.google.com/o/oauth2/token", data=urlencod
         "redirect_uri": "urn:ietf:wg:oauth:2.0:oob",
         "grant_type": "authorization_code",
     }).encode())) as res:
-    access_token = json.loads(res.read())["access_token"]
+    eres = json.loads(res.read())
 
 # request user email
 with urlopen(Request("https://www.googleapis.com/oauth2/v2/userinfo", headers={
-        "Authorization": "Bearer %s" % access_token,
+        "Authorization": "Bearer %s" % eres["access_token"],
     })) as res:
-    user = json.loads(res.read())["email"]
+    ures = json.loads(res.read())
 
 # connect to imap
 imap = IMAP4_SSL("imap.gmail.com", 993)
 
 # authenticate the gmail way
 imap.authenticate("XOAUTH2", lambda x:
-    "user=%s\1auth=Bearer %s\1\1" % (user, access_token))
+    "user=%s\1auth=Bearer %s\1\1" % (ures["email"], eres["access_token"]))
 
 # the following is just an example that shows available folders
 # you can use any function provided by imaplib
@@ -64,7 +67,7 @@ print("")
 
 ## Go
 
-First install dependencies:
+First install the go-imap package:
 ```
 go get github.com/emersion/go-imap/...
 ```
@@ -84,6 +87,8 @@ import (
     "github.com/emersion/go-sasl"
 )
 
+// create a Google app here https://console.developers.google.com
+// then fill the following variables
 const (
     GMAIL_CLIENT_ID = ""
     GMAIL_CLIENT_SECRET = ""
