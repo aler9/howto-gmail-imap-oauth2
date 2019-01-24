@@ -155,7 +155,7 @@ func main() {
 
     // connect to imap server
     imap,err := iclient.DialTLS("imap.gmail.com:993", nil)
-	if err != nil {
+    if err != nil {
         panic(err)
     }
     defer imap.Logout()
