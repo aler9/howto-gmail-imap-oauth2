@@ -140,13 +140,12 @@ func main() {
     }
 
     // request user email
-    hclient := &http.Client{}
     req,err := http.NewRequest("GET", "https://www.googleapis.com/oauth2/v2/userinfo", nil)
     if err != nil {
         panic(err)
     }
     req.Header.Add("Authorization", "Bearer " + eres.AccessToken)
-    res,err = hclient.Do(req)
+    res,err = http.DefaultClient.Do(req)
     if err != nil {
         panic(err)
     }
